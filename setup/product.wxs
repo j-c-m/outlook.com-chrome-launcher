@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" Name="Outlook.com Chrome Launcher" Language="1033" Version="1.0.0.0" Manufacturer="j-c-m" UpgradeCode="df257e28-8346-4a24-9373-c15881773277">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <Feature Id="ProductFeature" Title="setup" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="ProductShortcuts" />
+    </Feature>
+  </Product>
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="Outlook.com Chrome Launcher" />
+      </Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="Outlook.com Chrome Launcher" />
+      </Directory>
+    </Directory>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="ProductShortcuts" Directory="ApplicationProgramsFolder">
+      <Component Id="ApplicationShortcut" Guid="2cd2fa7f-4b6e-4ca9-a5d0-2e24a2a5dc14">
+        <Shortcut Id="ApplicationStartMenuShortcut" Name="Outlook.com" Description="Outlook.com Chrome Launcher" Target="[INSTALLFOLDER]outlook.com.exe" WorkingDirectory="INSTALLFOLDER" />
+        <RemoveFolder Id="RemoveApplicationProgramsFolder" Directory="ApplicationProgramsFolder" On="uninstall" />
+        <RegistryValue Root="HKCU" Key="Software\Outlook.com Chrome Launcher" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Id="outlook.com.exe" Guid="964e38ed-2575-4f2b-ba22-0fa363eb6bdd">
+        <File Id="outlook.com.exe" Source="..\release\outlook.com.exe" KeyPath="yes" Checksum="yes"/>
+      </Component>
+      <Component Id="outlook.com.white.png" Guid="b7401838-a40a-464d-8ab3-b0204c36476e">
+        <File Id="outlook.com.white.png" Source="..\outlook.com\outlook.com.white.png" KeyPath="yes"/>
+      </Component>
+      <Component Id="outlook.com.visualelementsmanifest.xml" Guid="9db5058c-e5de-4cc2-96ed-17d1227414bc">
+        <File Id="outlook.com.visualelementsmanifest.xml" Source="..\outlook.com\outlook.com.visualelementsmanifest.xml" KeyPath="yes"/>
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>
